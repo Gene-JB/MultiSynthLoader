@@ -25,9 +25,22 @@
 #include <circle/gpiomanager.h>
 #include <circle/i2cmaster.h>
 #include <circle/spimaster.h>
+#include <display/hd44780device.h>
+#include <display/ssd1306device.h>
+#include <display/st7789device.h>
+#include <display/font6x8.h>
+#include <circle/types.h>
 #include <circle/usb/usbcontroller.h>
-#include "config.h"
-#include "minijv880.h"
+#include <fatfs/ff.h>
+#include <Properties/propertiesfatfsfile.h>
+#include <circle/sysconfig.h>
+#include <string>
+//#include "config.h"
+//#include "minijv880.h"
+
+#define SPI_INACTIVE	255
+#define SPI_DEF_CLOCK	15000	// kHz
+#define SPI_DEF_MODE	0		// Default mode (0,1,2,3)
 
 enum TShutdownMode
 {
@@ -45,19 +58,31 @@ public:
 	bool Initialize (void);
 
 	TShutdownMode Run (void);
+	bool InitDisplay (void);
+	void UpdateDisplay (void);
+	void LCDWrite (const char *pString);
 
 private:
 	static void PanicHandler (void);
 
 private:
+    CSSD1306Device* m_pSSD1306 = nullptr;
+    CST7789Device* m_pST7789 = nullptr;
+    CST7789Display* m_pST7789Display = nullptr;
+    CHD44780Device* m_pHD44780 = nullptr;
 	// do not change this order
-	CConfig		m_Config;
-	CCPUThrottle	m_CPUThrottle;
+	//CConfig		m_Config;
 	CGPIOManager	m_GPIOManager;
 	CI2CMaster	m_I2CMaster;
 	CSPIMaster	*m_pSPIMaster;
-	CMiniJV880	*m_pJV880;
+	CCharDevice	*m_LCD;
+	CWriteBufferDevice *m_pLCDBuffered;
+	CCPUThrottle	m_CPUThrottle;
 	CUSBController *m_pUSB;
+	CPropertiesFatFsFile* m_pMiniDexedConfig; 
+    CPropertiesFatFsFile* m_pConfig;
+
+	//void m_pLCDBuffered(void);
 
 	static CKernel *s_pThis;
 };
