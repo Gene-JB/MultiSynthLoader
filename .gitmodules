@@ -1,3 +1,8 @@
 [submodule "CMSIS_5"]
 	path = CMSIS_5
 	url = https://github.com/ARM-software/CMSIS_5
+[submodule "minidexed"]
+	path = minidexed
+	url = https://github.com/probonopd/MiniDexed.git
+[submodule "minidexed.circle-stdlib.libs.circle"]
+	branch = develop

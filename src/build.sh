@@ -30,10 +30,13 @@ if [ "${USB_DID}" ] ; then
 fi
 
 # Build circle-stdlib library
-cd circle-stdlib/
+cd minidexed/circle-stdlib/
 make mrproper || true
 ./configure -r ${RPI} --prefix "${TOOLCHAIN_PREFIX}" ${OPTIONS} -o KERNEL_MAX_SIZE=0x400000
 make -j
+
+git submodule sync --recursive
+git submodule update --init --remote --recursive
 
 # Build additional libraries
 cd libs/circle/addon/display/

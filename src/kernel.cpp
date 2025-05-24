@@ -173,6 +173,12 @@ bool CKernel::InitDisplay (void)
 		unsigned ssd1306addr = m_pMiniDexedConfig->GetNumber("SSD1306LCDI2CAddress", 0x3c);
 		//LOGNOTE("SSD1306 I2C Address: 0x%02X", ssd1306addr);
 		bool st7789 = m_pMiniDexedConfig->GetNumber ("ST7789Enabled", 0) != 0;
+		LOGNOTE("startSC55 returned: %d", m_pMiniDexedConfig->GetNumber("SSD1306LCDWidth", 128));
+		LOGNOTE("startSC55 returned: %d", m_pMiniDexedConfig->GetNumber("SSD1306LCDHeight", 128));
+		LOGNOTE("startSC55 returned: %d", m_pMiniDexedConfig->GetNumber("SSD1306LCDRotate", 128));
+		LOGNOTE("startSC55 returned: %d", m_pMiniDexedConfig->GetNumber("SSD1306LCDMirror", 128));
+		LOGNOTE("startSC55 returned: %d", ssd1306addr);
+		LOGNOTE("startSC55 returned: %d", &m_I2CMaster);
 		if (ssd1306addr != 0) {
 			m_pSSD1306 = new CSSD1306Device (m_pMiniDexedConfig->GetNumber("SSD1306LCDWidth", 128), 
 											 m_pMiniDexedConfig->GetNumber("SSD1306LCDHeight", 32),
